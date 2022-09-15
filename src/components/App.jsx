@@ -5,28 +5,25 @@ import Section from './Section';
 import Statistics from './Statistics/Statistics';
 
 export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
-    this.onLeaveFeedback = this.onLeaveFeedback.bind(this);
-  }
-  countTotalFeedback() {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  countTotalFeedback = () => {
     return Object.values(this.state).reduce((acc, next) => acc + next, 0);
-  }
+  };
 
-  countPositiveFeedbackPercentage() {
+  countPositiveFeedbackPercentage = () => {
     return Math.round((this.state.good / this.countTotalFeedback()) * 100) || 0;
-  }
+  };
 
-  onLeaveFeedback(type) {
+  onLeaveFeedback = type => {
     this.setState(state => {
       return { [type]: state[type] + 1 };
     });
-  }
+  };
 
   render() {
     const noFeedback = this.countTotalFeedback() === 0;
@@ -34,7 +31,7 @@ export class App extends Component {
       <div>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={{}}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>

@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class FeedbackOptions extends Component {
-  render() {
-    return (
-      <div>
-        <button onClick={() => this.props.onLeaveFeedback('good')}>Good</button>
-        <button onClick={() => this.props.onLeaveFeedback('neutral')}>
-          Neutral
+export default function FeedbackOptions({ onLeaveFeedback, options }) {
+  return (
+    <div>
+      {options.map(button => (
+        <button onClick={() => onLeaveFeedback(button)} key={button}>
+          {button}
         </button>
-        <button onClick={() => this.props.onLeaveFeedback('bad')}>Bad</button>
-      </div>
-    );
-  }
+      ))}
+    </div>
+  );
 }
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.object.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
   onLeaveFeedback: PropTypes.func.isRequired,
 };
